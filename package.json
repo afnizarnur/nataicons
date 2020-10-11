@@ -1,6 +1,6 @@
 {
   "name": "nataicons",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A fun, simple, and awesome icon library for Natatoko",
   "main": "index.js",
   "scripts": {
