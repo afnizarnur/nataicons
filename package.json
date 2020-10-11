@@ -4,8 +4,10 @@
   "description": "A fun, simple, and awesome icon library for Natatoko",
   "main": "index.js",
   "scripts": {
-    "build": "figma-assets-generator",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run get-icons && npm run optimize-icons && npm run build-vue",
+    "get-icons": "figma-assets-generator",
+    "optimize-icons": "svgo icons --config .svgo.yaml --pretty --indent=2",
+    "build-vue": "rm -rf components/vue && mkdir components/vue/ && node ./scripts/build-vue.js"
   },
   "repository": {
     "type": "git",
@@ -18,9 +20,13 @@
   "author": "Afnizar Nur Ghifari",
   "license": "MIT",
   "devDependencies": {
-    "figma-assets-generator": "^1.2.0"
-  },
-  "dependencies": {
-    "svgo": "^1.3.2"
+    "@vue/compiler-dom": "^3.0.0",
+    "camelcase": "^6.1.0",
+    "dedent": "^0.7.0",
+    "figma-assets-generator": "^1.2.0",
+    "fs": "0.0.1-security",
+    "rimraf": "^3.0.2",
+    "svgo": "^1.3.2",
+    "vue-template-compiler": "^2.6.12"
   }
 }
