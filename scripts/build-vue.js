@@ -13,7 +13,7 @@ function svgToVue(svg) {
 
 console.log("Building Vue components...")
 
-rimraf("./components/vue/*")
+rimraf("./vue/*")
   .then(() => {
     return Promise.all([
       fs.readdir("./icons").then((files) => {
@@ -33,7 +33,7 @@ rimraf("./components/vue/*")
                   "export default function"
                 )
                 return fs
-                  .writeFile(`./components/vue/${fileName}`, content)
+                  .writeFile(`./vue/${fileName}`, content)
                   .then(() => fileName)
               })
           })
@@ -45,7 +45,7 @@ rimraf("./components/vue/*")
             })
             .join("\n")
 
-          return fs.writeFile("./components/vue/index.js", exportStatements)
+          return fs.writeFile("./vue/index.js", exportStatements)
         })
       }),
     ])

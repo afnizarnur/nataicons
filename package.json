@@ -1,23 +1,27 @@
 {
   "name": "nataicons",
   "version": "0.0.1",
-  "description": "A fun, simple, and awesome icon library for Natatoko",
+  "description": "A fun-themed and simple icon library made by Natatoko for everyone",
+  "author": "Afnizar Nur Ghifari <afnizarhilmi@gmail.com>",
   "main": "index.js",
   "scripts": {
-    "build": "npm run get-icons && npm run optimize-icons && npm run build-vue",
-    "get-icons": "figma-assets-generator",
-    "optimize-icons": "svgo icons --config .svgo.yaml --pretty --indent=2",
-    "build-vue": "rm -rf components/vue && mkdir components/vue/ && node ./scripts/build-vue.js"
+    "prepublishOnly": "npm run build",
+    "build": "npm run build:icons && npm run build:vue",
+    "build:icons": "npm run icons:get && npm run icons:optimize",
+    "build:vue": "rm -rf ./vue && mkdir ./vue && node ./scripts/build-vue.js",
+    "icons:get": "figma-assets-generator",
+    "icons:optimize": "svgo icons --config .svgo.yaml --pretty --indent=2"
   },
   "repository": {
     "type": "git",
     "url": "https;//github.com/afnizarnur/nataicons"
   },
   "keywords": [
-    "icon",
-    "design"
+    "icons",
+    "design",
+    "minimal",
+    "svg"
   ],
-  "author": "Afnizar Nur Ghifari",
   "license": "MIT",
   "devDependencies": {
     "@vue/compiler-dom": "^3.0.0",
@@ -28,5 +32,9 @@
     "rimraf": "^3.0.2",
     "svgo": "^1.3.2",
     "vue-template-compiler": "^2.6.12"
-  }
+  },
+  "files": [
+    "icons",
+    "components/"
+  ]
 }
