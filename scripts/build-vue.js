@@ -3,13 +3,6 @@ const dedent = require("dedent")
 const camelcase = require("camelcase")
 const { promisify } = require("util")
 const rimraf = promisify(require("rimraf"))
-const { compile } = require("@vue/compiler-dom")
-
-function svgToVue(svg) {
-  return compile(svg, {
-    mode: "module",
-  }).code
-}
 
 const componentTemplate = (name, svg) =>
   `
