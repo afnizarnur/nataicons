@@ -5,7 +5,7 @@
   "author": "Afnizar Nur Ghifari <afnizarhilmi@gmail.com>",
   "homepage": "https://github.com/afnizarnur/nataicons",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/@afnizarnur"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
