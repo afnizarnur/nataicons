@@ -15,7 +15,7 @@ const build = [
     input,
     plugins,
     output: {
-      file: `vue/lib/index.es.js`,
+      file: `packages/vue/lib/index.es.js`,
       format: "es",
       sourcemap: true,
     },
@@ -26,7 +26,7 @@ const build = [
     input,
     plugins,
     output: {
-      file: `vue/lib/index.cjs.js`,
+      file: `packages/vue/lib/index.cjs.js`,
       format: "cjs",
       sourcemap: true,
     },
@@ -37,7 +37,7 @@ const build = [
     input,
     plugins,
     output: {
-      file: `vue/lib/index.umd.js`,
+      file: `packages/vue/lib/index.umd.js`,
       format: "umd",
       name: `nataicons`,
       sourcemap: true,
