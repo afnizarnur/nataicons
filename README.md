@@ -1,6 +1,17 @@
-# Nataicons
+<div align="center">
+  <a href="https://github.com/afnizarnur/nataicons">
+    <img src="https://user-images.githubusercontent.com/4648648/96117950-08b8f100-0f15-11eb-8385-ef647435a5ad.png" width="44">
+  </a>
+</div>
+<h1 align="center">Nataicons</h1>
 
-Nataicons is a fun-themed simple open source icon by the folks at [Natatoko](https://natatoko.com/). This icons provide 2 icons variant: 24x24 and 20x20. Practically, this icons are used on our web application, but feel free to use it on your project!
+<p align="center">
+  A fun-themed simple open source icon by the folks at <a href="https://natatoko.com">Natatoko</a>. This icons provide 2 icons variant: 24x24 and 20x20. Practically, this icons are used on our web application, but feel free to use it on your project!
+</p>
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/4648648/96118486-c47a2080-0f15-11eb-8899-59ce1acc32b1.png">
+</div>
 
 ## Installation
 
