@@ -18,7 +18,11 @@
 Install with [npm](npmjs.com/).
 
 ```bash
+# If you just need svg and svg sprite
 npm install nataicons --save
+
+# If you just need vue component
+npm install @nataicons/vue --save
 ```
 
 ## Usage

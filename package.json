@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "A fun-themed simple open source icon made by the folks at Natatoko.",
   "author": "Afnizar Nur Ghifari <afnizarhilmi@gmail.com>",
-  "main": "vue/lib/index.cjs.js",
-  "module": "vue/lib/index.es.js",
-  "jsnext:main": "vue/lib/index.es.js",
   "homepage": "https://github.com/afnizarnur/nataicons",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
