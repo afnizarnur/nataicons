@@ -70,7 +70,7 @@ rimraf(".vue/*")
             })
             .join("\n")
 
-          return fs.writeFile("./vue/index.js", exportStatements)
+          return fs.appendFile("./vue/index.js", "\n"+exportStatements)
         })
       }),
     ])

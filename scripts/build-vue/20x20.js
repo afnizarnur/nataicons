@@ -75,4 +75,4 @@ rimraf(".vue/*")
       }),
     ])
   })
-  .then(() => console.log("Finished building vue components."))
+  .then(() => console.log("Finished building vue components.\n"))
