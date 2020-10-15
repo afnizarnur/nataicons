@@ -1,14 +1,13 @@
 const pkg = require("../../package.json")
-const path = require("path")
 const fs = require("fs").promises
 
 const packageJSONTemplate = (name) =>
   `{
-"name": "@nataicons/${name}",
+"name": "nataicons/vue",
 "version": "${pkg.version}",
-"main": "packages/vue/lib/index.cjs.js",
-"module": "packages/vue/lib/index.es.js",
-"jsnext:main": "packages/vue/lib/index.es.js",
+"main": "lib/index.cjs.js",
+"module": "lib/index.es.js",
+"jsnext:main": "lib/index.es.js",
 "license": "${pkg.license}",
 "homepage": "${pkg.homepage}",
 "description": "${pkg.description}",
@@ -18,12 +17,12 @@ const packageJSONTemplate = (name) =>
 }
 `.trim()
 
-console.log("\nCreating package.json and README.md...")
+console.log("\nCreating package.json")
 
 return Promise.all([
   fs
-    .writeFile(`./packages/vue/package.json`, packageJSONTemplate("vue"))
+    .writeFile(`./vue/package.json`, packageJSONTemplate("vue"))
     .then(() => {
-      fs.copyFile("./README.md", `./packages/vue/README.md`)
+      fs.copyFile("./README.md", `./vue/README.md`)
     }),
-]).then(() => console.log("Finished creating package.json and README.md."))
+]).then(() => console.log("Finished creating package.json"))
