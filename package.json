@@ -10,7 +10,7 @@
     "prepublishOnly": "npm run build",
     "build": "npm run build:icons && npm run build:vue && rollup -c",
     "build:icons": "node ./scripts/build-icons.js && npm run icons:optimize",
-    "build:vue": "rm -rf ./vue && mkdir ./vue && node ./scripts/build-vue.js",
+    "build:vue": "rm -rf ./vue && mkdir ./vue && node ./scripts/build-vue/20x20.js && node ./scripts/build-vue/24x24.js",
     "icons:get": "figma-assets-generator",
     "icons:optimize": "svgo icons/24x24 icons/20x20 --config .svgo.yaml --pretty --indent=2"
   },

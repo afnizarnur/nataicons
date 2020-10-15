@@ -31,28 +31,28 @@ export default {
 }
 `.trim()
 
-console.log("Building Vue components...")
+console.log("Building vue 24x24 icons components...")
 
 rimraf(".vue/*")
   .then(() => {
     return Promise.all([
-      fs.readdir("./icons").then((files) => {
+      fs.readdir("./icons/24x24").then((files) => {
         return Promise.all(
           files.map((file) => {
             return fs
-              .readFile(`./icons/${file}`, "utf8")
+              .readFile(`./icons/24x24/${file}`, "utf8")
               .then((content) => {
                 return componentTemplate(
                   `${camelcase(file.replace(/\.svg$/, ""), {
                     pascalCase: true,
-                  })}.js`,
+                  })}24.js`,
                   content
                 )
               })
               .then((component) => {
                 const fileName = `${camelcase(file.replace(/\.svg$/, ""), {
                   pascalCase: true,
-                })}.js`
+                })}24.js`
                 const content = dedent(component).replace(
                   "export function",
                   "export default function"
@@ -75,4 +75,4 @@ rimraf(".vue/*")
       }),
     ])
   })
-  .then(() => console.log("Finished building Vue components."))
+  .then(() => console.log("Finished building vue components."))
