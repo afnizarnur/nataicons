@@ -12,7 +12,7 @@ npm install nataicons --save
 
 2. Import the icon
 ```js
-import { Home, Inbox, Folder, ... } from "nataicons"
+import { Home24, Inbox24, Folder24, ... } from "nataicons"
 ```
 
 3. Use the icon on your project
@@ -20,10 +20,10 @@ By default, each icon size will be on 24x24 and 20x20 depends on the variant. Yo
 
 ```js 
 // Multiple based sizing
-<Home size="2x" class="custom-class" />
+<Home24 size="2x" class="custom-class" />
 
 // px based sizing
-<Home size="20" class="custom-class" />
+<Home24 size="20" class="custom-class" />
 ```
 
 ## Inspiration
