@@ -1,7 +1,6 @@
 <p align="center">
-<a href="https://github.com/afnizarnur/nataicons">
+  <a href="https://github.com/afnizarnur/nataicons">
     <img src="https://user-images.githubusercontent.com/4648648/96120944-841ca180-0f19-11eb-892e-4312017f5e8b.png" width="44">
-  </a>
   </a>
 </p>
 <h3 align="center">Nataicons</h3>
@@ -19,11 +18,8 @@
 Install with [npm](npmjs.com/).
 
 ```bash
-# If you just need svg and svg sprite
 npm install nataicons --save
 
-# If you just need vue component
-npm install @nataicons/vue --save
 ```
 
 ## Usage
@@ -61,9 +57,10 @@ Copy the SVGs you want to use from `icons/24x24` or `icons/20x20` inside `node_m
 ### Vue
 
 1.  Import the icon
+The Vue component located inside the package, so to import the component make sure to type the package name like this `nataicons/vue`.
 
 ```js
-import { Home24, Inbox24, Folder24, ... } from "nataicons"
+import { Home24, Inbox24, Folder24, ... } from "nataicons/vue"
 ```
 
 2. Use the icon on your project

@@ -2,7 +2,6 @@ const fs = require("fs").promises
 const dedent = require("dedent")
 const camelcase = require("camelcase")
 const { promisify } = require("util")
-const rimraf = promisify(require("rimraf"))
 
 const componentTemplate = (name, svg) =>
   `
@@ -31,7 +30,7 @@ export default {
 }
 `.trim()
 
-console.log("Building vue 24x24 icons components...")
+console.log("Building Vue 24x24 icons components...")
 
 return Promise.all([
   fs.readdir("./icons/24x24").then((files) => {
@@ -56,7 +55,7 @@ return Promise.all([
               "export default function"
             )
             return fs
-              .writeFile(`./packages/vue/${fileName}`, content)
+              .writeFile(`./vue/${fileName}`, content)
               .then(() => fileName)
           })
       })
@@ -68,7 +67,7 @@ return Promise.all([
         })
         .join("\n")
 
-      return fs.appendFile("./packages/vue/index.js", "\n" + exportStatements)
+      return fs.appendFile("./vue/index.js", "\n" + exportStatements)
     })
   }),
-]).then(() => console.log("Finished building vue components."))
+]).then(() => console.log("Finished building Vue components."))
