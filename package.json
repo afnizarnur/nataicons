@@ -9,10 +9,10 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "npm run build:icons && npm run build:vue && rollup -c",
-    "build:icons": "npm run icons:get && npm run icons:optimize",
+    "build:icons": "node ./scripts/build-icons.js && npm run icons:optimize",
     "build:vue": "rm -rf ./vue && mkdir ./vue && node ./scripts/build-vue.js",
     "icons:get": "figma-assets-generator",
-    "icons:optimize": "svgo icons --config .svgo.yaml --pretty --indent=2"
+    "icons:optimize": "svgo icons/24x24 icons/20x20 --config .svgo.yaml --pretty --indent=2"
   },
   "repository": {
     "type": "git",
