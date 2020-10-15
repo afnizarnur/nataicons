@@ -4,9 +4,6 @@
   "description": "A fun-themed simple open source icon made by the folks at Natatoko.",
   "author": "Afnizar Nur Ghifari <afnizarhilmi@gmail.com>",
   "homepage": "https://github.com/afnizarnur/nataicons",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@afnizarnur"
-  },
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "npm run build:icons && npm run build:vue && rollup -c",
