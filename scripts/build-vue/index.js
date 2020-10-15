@@ -4,7 +4,7 @@ const fs = require("fs").promises
 
 const packageJSONTemplate = (name) =>
   `{
-"name": "nataicons/${name}",
+"name": "@nataicons/${name}",
 "version": "${pkg.version}",
 "main": "packages/vue/lib/index.cjs.js",
 "module": "packages/vue/lib/index.es.js",
