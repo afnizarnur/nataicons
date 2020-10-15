@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/afnizarnur/nataicons">
-    <img src="https://user-images.githubusercontent.com/4648648/96117950-08b8f100-0f15-11eb-8385-ef647435a5ad.png" width="44">
+    <img src="https://user-images.githubusercontent.com/4648648/96120944-841ca180-0f19-11eb-892e-4312017f5e8b.png" width="44">
   </a>
 </div>
 <h1 align="center">Nataicons</h1>
@@ -18,7 +18,11 @@
 Install with [npm](npmjs.com/).
 
 ```bash
+# If you just need svg and svg sprite
 npm install nataicons --save
+
+# If you just need vue component
+npm install @nataicons/vue --save
 ```
 
 ## Usage

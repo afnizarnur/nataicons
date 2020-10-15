@@ -33,7 +33,7 @@ export default {
 
 console.log("Building vue 24x24 icons components...")
 
-rimraf(".vue/*")
+rimraf("./packages/vue/*")
   .then(() => {
     return Promise.all([
       fs.readdir("./icons/24x24").then((files) => {
@@ -58,7 +58,7 @@ rimraf(".vue/*")
                   "export default function"
                 )
                 return fs
-                  .writeFile(`./vue/${fileName}`, content)
+                  .writeFile(`./packages/vue/${fileName}`, content)
                   .then(() => fileName)
               })
           })
@@ -70,7 +70,10 @@ rimraf(".vue/*")
             })
             .join("\n")
 
-          return fs.appendFile("./vue/index.js", "\n"+exportStatements)
+          return fs.appendFile(
+            "./packages/vue/index.js",
+            "\n" + exportStatements
+          )
         })
       }),
     ])
