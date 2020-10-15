@@ -1,5 +1,5 @@
 # Nataicons
-Nataicons is a fun-themed simple open source icon by the folks at [Natatoko](https://natatoko.com/). This icons are used on our web application, but feel free to use it on your project. 
+Nataicons is a fun-themed simple open source icon by the folks at [Natatoko](https://natatoko.com/). This icons provide 2 icons variant: 24x24 and 20x20. Practically, this icons are used on our web application, but feel free to use it on your project!
 
 ## Usage
 Currently, *we only provide Vue icon component*.
@@ -16,7 +16,7 @@ import { Home, Inbox, Folder, ... } from "nataicons"
 ```
 
 3. Use the icon on your project
-By default, icons sizing will be based on font size of the parent element. You can set a custom `size`: Multiple based sizing followed by an `x` or set a `px` directly by passing an integer.
+By default, each icon size will be on 24x24 and 20x20 depends on the variant. You can set a custom `size`: Multiple based sizing followed by an `x` or set a `px` directly by passing an integer.
 
 ```js 
 // Multiple based sizing
