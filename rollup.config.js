@@ -7,7 +7,7 @@ const plugins = [
   }),
 ]
 
-const input = "./vue/index.js"
+const input = "./packages/vue/index.js"
 
 const build = [
   /* esm */
