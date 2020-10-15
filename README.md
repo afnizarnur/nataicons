@@ -1,9 +1,10 @@
-<div align="center">
-  <a href="https://github.com/afnizarnur/nataicons">
+<p align="center">
+<a href="https://github.com/afnizarnur/nataicons">
     <img src="https://user-images.githubusercontent.com/4648648/96120944-841ca180-0f19-11eb-892e-4312017f5e8b.png" width="44">
   </a>
-</div>
-<h1 align="center">Nataicons</h1>
+  </a>
+</p>
+<h3 align="center">Nataicons</h3>
 
 <p align="center">
   A fun-themed simple open source icon by the folks at <a href="https://natatoko.com">Natatoko</a>. This icons provide 2 icons variant: 24x24 and 20x20. Practically, this icons are used on our web application, but feel free to use it on your project!
