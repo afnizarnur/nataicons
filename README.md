@@ -37,7 +37,7 @@ Copy the SVGs you want to use from `icons/24x24` or `icons/20x20` inside `node_m
   viewBox="0 0 24 24"
 >
   <path
-    fill="#333"
+    fill="currentColor"
     fill-rule="evenodd"
     d="M3.22 1.375a1 1 0 111.56 1.25l-2 2.5a1 1 0 11-1.56-1.25l2-2.5zm16.155-.156a1 1 0 011.406.156l2 2.5a1 1 0 11-1.562 1.25l-2-2.5a1 1 0 01.156-1.406zM4 12a8 8 0 1116 0 8 8 0 01-16 0zm8-10C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 5.5a1 1 0 10-2 0v4.032l-2.64 2.2a1 1 0 101.28 1.536l3-2.5A1 1 0 0013 12V7.5z"
   />
@@ -57,7 +57,7 @@ Copy the SVGs you want to use from `icons/24x24` or `icons/20x20` inside `node_m
 ### Vue
 
 1.  Import the icon
-The Vue component located inside the package, so to import the component make sure to type the package name like this `nataicons/vue`.
+    The Vue component located inside the package, so to import the component make sure to type the package name like this `nataicons/vue`.
 
 ```js
 import { Home24, Inbox24, Folder24, ... } from "nataicons/vue"
