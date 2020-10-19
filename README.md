@@ -67,22 +67,6 @@ By default, each icon size will be on 24x24 and 20x20 depends on the variant. Yo
 <Home24 size="20" class="custom-class" />
 ```
 
-### React
-
-1.  Import the icon
-
-Same like Vue, to use the React components type the package `nataicons/react` on your project.
-
-```js
-import { Home24, Inbox24, Folder24, ... } from "nataicons/react"
-```
-
-2. Use the icon on your project
-
-```js
-<Home24 class="custom-class" />
-```
-
 ## Inspiration
 
 1. [vue-hero-icons](https://github.com/matschik/vue-hero-icons)
