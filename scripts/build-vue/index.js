@@ -3,7 +3,7 @@ const fs = require("fs").promises
 
 const packageJSONTemplate = (name) =>
   `{
-"name": "nataicons/vue",
+"name": "nataicons",
 "version": "${pkg.version}",
 "main": "lib/index.cjs.js",
 "module": "lib/index.es.js",

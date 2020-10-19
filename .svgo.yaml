@@ -21,3 +21,5 @@ plugins:
   - removeEmptyAttrs: true
   - removeHiddenElems: true
   - collapseGroups: true
+  - convertColors:
+        currentColor: true
