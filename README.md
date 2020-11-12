@@ -75,4 +75,4 @@ By default, each icon size will be on 24x24 and 20x20 depends on the variant. Yo
 
 ## License
 
-Nataicons is licensed under the [MIT License](https://github.com/afnizarnur/nataicons/blob/dev/LICENSE). In short, you are free to use this icons in any personal, open-source or commercial work. Attribution is optional but appreciated.
+Nataicons is licensed under the [MIT License](https://github.com/afnizarnur/nataicons//tree/main/LICENSE). In short, you are free to use this icons in any personal, open-source or commercial work. Attribution is optional but appreciated.
