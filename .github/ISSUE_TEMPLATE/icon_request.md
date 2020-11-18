@@ -1,6 +1,6 @@
 ---
 name: Icon Request 💡
-about: Request new icon
+about: Request a new icon for your needs
 labels: icon request
 ---
 ## Icon name
