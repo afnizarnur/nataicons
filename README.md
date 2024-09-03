@@ -18,7 +18,6 @@
 ## Installation
 
 Install with [npm](npmjs.com/).
-
 ```bash
 npm install nataicons --save
 ```
@@ -37,7 +36,7 @@ Copy the SVGs you want to use from `icons/24x24` or `icons/20x20` inside `node_m
 
 ### SVG Sprite
 
-1. Include an icon on your page with the following markup:
+Include an icon on your page with the following markup:
 
 ```html
 <svg width="24" height="24" class="custom-class">
@@ -47,25 +46,54 @@ Copy the SVGs you want to use from `icons/24x24` or `icons/20x20` inside `node_m
 
 ### Vue
 
-1.  Import the icon
-
-The Vue component located inside the package, so to import the component make sure to type the package name `nataicons/vue`.
+1. Import the icon components
 
 ```js
-import { Home24, Inbox24, Folder24, ... } from "nataicons/vue"
+import { AlarmIcon, AlertIcon, NataIcon } from "nataicons/vue"
 ```
 
-2. Use the icon on your project
+2. Use the icon components in your template
 
-By default, each icon size will be on 24x24 and 20x20 depends on the variant. You can set a custom `size`: Multiple based sizing followed by an `x` or set a `px` directly by passing an integer.
 
-```js
-// Multiple based sizing
-<Home24 size="2x" class="custom-class" />
-
-// px based sizing
-<Home24 size="20" class="custom-class" />
+```jsx
+<template>
+  <div>
+    <AlarmIcon color="red" size="24" />
+    <NataIcon name="bell" color="blue" size="32" />
+  </div>
+</template>
+<script>
+  import { AlarmIcon } from "nataicons/vue"
+    export default {
+    components: { AlarmIcon }
+  }
+</script>
 ```
+
+You can set a custom `size` (in pixels) or use the default sizes (24px or 20px). The `color` prop allows you to change the icon color.
+
+### React
+
+1. Import the icon components
+
+```jsx
+import { AlarmIcon, NataIcon } from "nataicons/react"
+```
+
+2. Use the icon components in your JSX
+
+```jsx
+function MyComponent() {
+  return (
+    <div>
+      <AlarmIcon color="red" size={24} />
+      <NataIcon name="bell" color="blue" size={32} />
+    </div>  
+  )
+}
+```
+
+Similar to Vue, you can set a custom `size` (in pixels) or use the default sizes. The `color` prop allows you to change the icon color.
 
 ## Inspiration
 

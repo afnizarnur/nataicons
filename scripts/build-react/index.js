@@ -6,68 +6,71 @@ const rimraf = promisify(require("rimraf"))
 const dedent = require("dedent")
 const pkg = require("../../package.json")
 
-const componentTemplate = (name, svg, size) => {
-  const svgContent = svg
-    .replace(/<svg([^>]+)>/, (match, attributes) => {
-      // Remove width and height attributes from the original SVG
-      const cleanedAttributes = attributes
-        .replace(/\s*width=["'][^"']*["']/g, "")
-        .replace(/\s*height=["'][^"']*["']/g, "")
-      return `<svg${cleanedAttributes}>`
-    })
-    .replace(/\s*xmlns=["']http:\/\/www\.w3\.org\/2000\/svg["']/g, "")
-    .replace(/\s*xmlnsXlink=["']http:\/\/www\.w3\.org\/1999\/xlink["']/g, "")
-    .replace(/\n+/g, " ")
-    .replace(/>\s+</g, "><")
-    .replace(/fill="([^"]+)"/g, 'fill={color || "$1"}')
-    .trim()
-
-  return `
+const componentTemplate = (name, svg20, svg24) =>
+  `
 import React from 'react';
 
-function ${name}({ size = '${size}', color, ...props }) {
+const ${name}Icon = ({ size = '24', color = 'currentColor', ...props }) => {
+  const getSize = () => {
+    if (size.slice(-1) === 'x') 
+      return size.slice(0, size.length - 1) + 'em';
+    return parseInt(size) + 'px';
+  };
+
+  const updateSvg = (svgString) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(svgString, 'image/svg+xml');
+    const svg = doc.documentElement;
+
+    svg.setAttribute('width', getSize());
+    svg.setAttribute('height', getSize());
+
+    svg.querySelectorAll('[fill]:not([fill="none"])').forEach(el => {
+      el.setAttribute('fill', color);
+    });
+    svg.querySelectorAll('[stroke]:not([stroke="none"])').forEach(el => {
+      el.setAttribute('stroke', color);
+    });
+
+    return svg.outerHTML;
+  };
+
+  const svg20 = ${JSON.stringify(svg20)};
+  const svg24 = ${JSON.stringify(svg24)};
+
   return (
-    <svg 
-      width={size}
-      height={size}
-      viewBox="0 0 ${size} ${size}"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <div
+      style={{
+        display: 'inline-block',
+        width: getSize(),
+        height: getSize(),
+      }}
+      dangerouslySetInnerHTML={{
+        __html: updateSvg(size === '20' ? svg20 : svg24)
+      }}
       {...props}
-    >
-      ${svgContent}
-    </svg>
+    />
   );
-}
-
-export default ${name};
-`.trim()
-}
-
-const wrapperTemplate = (name) => `
-import React from 'react';
-import { ${name}2020, ${name}2424 } from './index';
-
-const ${name} = ({ size = '24', color, ...props }) => {
-  const IconComponent = size === '20' ? ${name}2020 : ${name}2424;
-  return <IconComponent size={size} color={color} {...props} />;
 };
 
-export default ${name};
-`
+export default ${name}Icon;
+`.trim()
 
 const indexTemplate = (components) =>
   `
-${components.map((comp) => `import ${comp} from './${comp}.jsx';`).join("\n")}
+import React from 'react';
+${components
+  .map((comp) => `import ${comp}Icon from './${comp}Icon';`)
+  .join("\n")}
 
 export {
-  ${components.join(",\n  ")}
+  ${components.map((comp) => `${comp}Icon`).join(",\n  ")}
 };
 
-export const Icon = ({ name, ...props }) => {
+export const NataIcon = ({ name, ...props }) => {
   const IconComponent = {
     ${components
-      .map((comp) => `${comp.toLowerCase()}: ${comp}`)
+      .map((comp) => `${comp.toLowerCase()}: ${comp}Icon`)
       .join(",\n    ")}
   }[name.toLowerCase()];
   
@@ -80,9 +83,7 @@ const packageJSONTemplate = () =>
 {
   "name": "nataicons-react",
   "version": "${pkg.version}",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",
+  "main": "index.js",
   "license": "${pkg.license}",
   "homepage": "${pkg.homepage}",
   "description": "${pkg.description}",
@@ -95,6 +96,11 @@ const packageJSONTemplate = () =>
 }
 `.trim()
 
+async function processSvgFile(filePath) {
+  const content = await fs.readFile(filePath, "utf8")
+  return content.trim().replace(/\n/g, " ")
+}
+
 async function buildReactComponents() {
   console.log("Building React icon components...")
 
@@ -102,40 +108,34 @@ async function buildReactComponents() {
     await rimraf("./react/*")
     await fs.mkdir("./react", { recursive: true })
 
-    const sizes = ["20x20", "24x24"]
+    const icons24 = await fs.readdir(
+      path.join(__dirname, "..", "..", "icons", "24x24")
+    )
     const components = []
-    const wrapperComponents = new Set()
 
-    for (const size of sizes) {
-      const iconDir = `./icons/${size}`
-      const files = await fs.readdir(iconDir)
+    for (const file of icons24) {
+      const baseName = path.basename(file, ".svg")
+      const componentName = camelcase(baseName, { pascalCase: true })
 
-      for (const file of files) {
-        const content = await fs.readFile(path.join(iconDir, file), "utf8")
-        const baseName = camelcase(file.replace(/\.svg$/, ""), {
-          pascalCase: true,
-        })
-        const componentName = `${baseName}${size.replace("x", "")}`
-        const component = componentTemplate(
-          componentName,
-          content,
-          size.split("x")[0]
-        )
+      const svg20Path = path.join(__dirname, "..", "..", "icons", "20x20", file)
+      const svg24Path = path.join(__dirname, "..", "..", "icons", "24x24", file)
 
-        await fs.writeFile(`./react/${componentName}.jsx`, dedent(component))
-        components.push(componentName)
-        wrapperComponents.add(baseName)
-      }
-    }
+      const [svg20Content, svg24Content] = await Promise.all([
+        processSvgFile(svg20Path).catch(() => ""),
+        processSvgFile(svg24Path),
+      ])
 
-    for (const wrapperName of wrapperComponents) {
-      const wrapperContent = wrapperTemplate(wrapperName)
-      await fs.writeFile(`./react/${wrapperName}.jsx`, dedent(wrapperContent))
-      components.push(wrapperName)
+      const component = componentTemplate(
+        componentName,
+        svg20Content,
+        svg24Content
+      )
+      await fs.writeFile(`./react/${componentName}Icon.js`, dedent(component))
+      components.push(componentName)
     }
 
     const indexContent = indexTemplate(components)
-    await fs.writeFile("./react/index.jsx", dedent(indexContent))
+    await fs.writeFile("./react/index.js", dedent(indexContent))
 
     await fs.writeFile("./react/package.json", packageJSONTemplate())
     await fs.copyFile("./README.md", "./react/README.md")
