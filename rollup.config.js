@@ -1,48 +1,29 @@
-import babel from "rollup-plugin-babel"
+import babel from "@rollup/plugin-babel"
+import resolve from "@rollup/plugin-node-resolve"
+import commonjs from "@rollup/plugin-commonjs"
+import { terser } from "rollup-plugin-terser"
 
-const plugins = [
-  babel({
-    presets: ["@vue/babel-preset-jsx"],
-    exclude: "node_modules/**",
-  }),
-]
-
-const input = "./vue/index.js"
-
-const build = [
-  /* esm */
-  {
-    input,
-    plugins,
-    output: {
-      file: `vue/lib/index.es.js`,
-      format: "es",
-      sourcemap: true,
-    },
-  },
-
-  /* cjs */
-  {
-    input,
-    plugins,
-    output: {
-      file: `vue/lib/index.cjs.js`,
+export default {
+  input: "vue/index.js",
+  output: [
+    {
+      file: "vue/lib/index.cjs.js",
       format: "cjs",
-      sourcemap: true,
     },
-  },
-
-  /* umd */
-  {
-    input,
-    plugins,
-    output: {
-      file: `vue/lib/index.umd.js`,
-      format: "umd",
-      name: `nataicons`,
-      sourcemap: true,
+    {
+      file: "vue/lib/index.es.js",
+      format: "es",
     },
-  },
-]
-
-export default build
+  ],
+  external: ["vue", /@babel\/runtime/], // Externalize Vue and Babel runtime
+  plugins: [
+    resolve(),
+    commonjs(),
+    babel({
+      babelHelpers: "runtime",
+      exclude: "node_modules/**",
+      extensions: [".js", ".jsx", ".es6", ".es", ".mjs", ".vue"],
+    }),
+    terser(),
+  ],
+}
