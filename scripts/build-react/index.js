@@ -28,7 +28,7 @@ const ${name}Icon = ({ size = '24', color = 'currentColor', ...props }) => {
   const svg20 = ${JSON.stringify(svg20)};
   const svg24 = ${JSON.stringify(svg24)};
 
-  const svgContent = updateSvg(size === '20' ? svg20 : svg24);
+  const svgContent = size === '20' || size === 20 ? updateSvg(svg20) : updateSvg(svg24);
 
   return React.createElement('svg', {
     xmlns: "http://www.w3.org/2000/svg",
