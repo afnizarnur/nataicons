@@ -6,7 +6,7 @@ const componentTemplate = (name, svg20, svg24) => `
 import { defineComponent, h, computed } from 'vue'
 
 export default defineComponent({
-  name: '${name}Icon',  // Added 'Icon' suffix to make it multi-word
+  name: '${name}Icon', 
   props: {
     size: {
       type: String,
@@ -34,7 +34,6 @@ export default defineComponent({
       svg.setAttribute('width', getSize.value)
       svg.setAttribute('height', getSize.value)
 
-      // Update color for elements with fill or stroke
       svg.querySelectorAll('[fill]:not([fill="none"])').forEach(el => {
         el.setAttribute('fill', props.color)
       })
