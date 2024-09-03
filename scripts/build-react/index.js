@@ -64,24 +64,6 @@ export const NataIcon = ({ name, ...props }) => {
 };
 `.trim()
 
-const packageJSONTemplate = () =>
-  `
-{
-  "name": "nataicons-react",
-  "version": "${pkg.version}",
-  "main": "index.js",
-  "license": "${pkg.license}",
-  "homepage": "${pkg.homepage}",
-  "description": "${pkg.description}",
-  "keywords": ${JSON.stringify(pkg.keywords)},
-  "repository": ${JSON.stringify(pkg.repository)},
-  "author": "${pkg.author}",
-  "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
-  }
-}
-`.trim()
-
 async function processSvgFile(filePath) {
   const content = await fs.readFile(filePath, "utf8")
   return content.trim().replace(/\n/g, " ")
@@ -122,9 +104,6 @@ async function buildReactComponents() {
 
     const indexContent = indexTemplate(components)
     await fs.writeFile("./react/index.js", dedent(indexContent))
-
-    await fs.writeFile("./react/package.json", packageJSONTemplate())
-    await fs.copyFile("./README.md", "./react/README.md")
 
     console.log("Finished building React components.\n")
   } catch (error) {
