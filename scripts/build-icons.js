@@ -11,7 +11,7 @@ const get24px = {
 const get20px = {
   personalAccessToken: process.env.FIGMA_TOKEN,
   fileId: "N4TZ7vR8BUDHmlgHMmpp9Q",
-  documentId: "54:135",
+  documentId: "1126:2",
   fileExtension: "svg",
   output: "icons/20x20",
 }
