@@ -3,6 +3,7 @@ node_modules
 build
 .env
 vue/
+react/
 nataicons-sprite.svg
 nataicons-24x24-sprite.svg
 nataicons-20x20-sprite.svg
