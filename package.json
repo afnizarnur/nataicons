@@ -6,9 +6,10 @@
   "homepage": "https://github.com/afnizarnur/nataicons",
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "npm run build:icons && npm run build:vue && rollup -c",
+    "build": "npm run build:icons && npm run build:vue && npm run build:react && rollup -c",
     "build:icons": "node ./scripts/build-icons.js && npm run icons:optimize && npm run icons:sprite-all && npm run icons:sprite-24x24 && npm run icons:sprite-20x20",
     "build:vue": "rm -rf ./vue && mkdir ./vue/ && node ./scripts/build-vue/20x20.js && node ./scripts/build-vue/24x24.js && node ./scripts/build-vue/index.js",
+    "build:react": "rm -rf ./react && mkdir ./react && node ./scripts/build-react/index.js",
     "icons:get": "figma-assets-generator",
     "icons:sprite-all": "svg-sprite --svg-namespace-classnames false --symbol --symbol-dest . --symbol-sprite nataicons-sprite.svg './icons/./24x24/*.svg' './icons/./20x20/*.svg'",
     "icons:sprite-24x24": "svg-sprite --svg-namespace-classnames false --symbol --symbol-dest . --symbol-sprite nataicons-24x24-sprite.svg './icons/./24x24/*.svg'",

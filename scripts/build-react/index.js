@@ -9,18 +9,23 @@ const pkg = require("../../package.json")
 const componentTemplate = (name, svg, size) => {
   const svgContent = svg
     .replace(/<svg([^>]+)>/, (match, attributes) => {
-      return `<svg${attributes} width={size} height={size} {...props}>`
+      // Remove width and height attributes from the original SVG
+      const cleanedAttributes = attributes
+        .replace(/\s*width=["'][^"']*["']/g, "")
+        .replace(/\s*height=["'][^"']*["']/g, "")
+      return `<svg${cleanedAttributes}>`
     })
     .replace(/\s*xmlns=["']http:\/\/www\.w3\.org\/2000\/svg["']/g, "")
     .replace(/\s*xmlnsXlink=["']http:\/\/www\.w3\.org\/1999\/xlink["']/g, "")
     .replace(/\n+/g, " ")
     .replace(/>\s+</g, "><")
+    .replace(/fill="([^"]+)"/g, 'fill={color || "$1"}')
     .trim()
 
   return `
 import React from 'react';
 
-function ${name}({ size = '${size}', ...props }) {
+function ${name}({ size = '${size}', color, ...props }) {
   return (
     <svg 
       width={size}
@@ -40,12 +45,12 @@ export default ${name};
 }
 
 const wrapperTemplate = (name) => `
-import * as React from 'react';
+import React from 'react';
 import { ${name}2020, ${name}2424 } from './index';
 
-const ${name} = ({ size, ...props }) => {
+const ${name} = ({ size = '24', color, ...props }) => {
   const IconComponent = size === '20' ? ${name}2020 : ${name}2424;
-  return <IconComponent size={size} {...props} />;
+  return <IconComponent size={size} color={color} {...props} />;
 };
 
 export default ${name};
@@ -99,6 +104,7 @@ async function buildReactComponents() {
 
     const sizes = ["20x20", "24x24"]
     const components = []
+    const wrapperComponents = new Set()
 
     for (const size of sizes) {
       const iconDir = `./icons/${size}`
@@ -106,9 +112,10 @@ async function buildReactComponents() {
 
       for (const file of files) {
         const content = await fs.readFile(path.join(iconDir, file), "utf8")
-        const componentName = `${camelcase(file.replace(/\.svg$/, ""), {
+        const baseName = camelcase(file.replace(/\.svg$/, ""), {
           pascalCase: true,
-        })}${size.replace("x", "")}`
+        })
+        const componentName = `${baseName}${size.replace("x", "")}`
         const component = componentTemplate(
           componentName,
           content,
@@ -117,7 +124,14 @@ async function buildReactComponents() {
 
         await fs.writeFile(`./react/${componentName}.jsx`, dedent(component))
         components.push(componentName)
+        wrapperComponents.add(baseName)
       }
+    }
+
+    for (const wrapperName of wrapperComponents) {
+      const wrapperContent = wrapperTemplate(wrapperName)
+      await fs.writeFile(`./react/${wrapperName}.jsx`, dedent(wrapperContent))
+      components.push(wrapperName)
     }
 
     const indexContent = indexTemplate(components)
