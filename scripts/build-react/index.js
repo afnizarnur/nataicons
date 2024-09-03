@@ -12,45 +12,31 @@ import React from 'react';
 
 const ${name}Icon = ({ size = '24', color = 'currentColor', ...props }) => {
   const getSize = () => {
-    if (size.slice(-1) === 'x') 
+    if (typeof size === 'string' && size.slice(-1) === 'x') 
       return size.slice(0, size.length - 1) + 'em';
-    return parseInt(size) + 'px';
+    return typeof size === 'number' ? size + 'px' : size;
   };
 
   const updateSvg = (svgString) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(svgString, 'image/svg+xml');
-    const svg = doc.documentElement;
-
-    svg.setAttribute('width', getSize());
-    svg.setAttribute('height', getSize());
-
-    svg.querySelectorAll('[fill]:not([fill="none"])').forEach(el => {
-      el.setAttribute('fill', color);
-    });
-    svg.querySelectorAll('[stroke]:not([stroke="none"])').forEach(el => {
-      el.setAttribute('stroke', color);
-    });
-
-    return svg.outerHTML;
+    return svgString
+      .replace(/width="\\d+"/, 'width="' + getSize() + '"')
+      .replace(/height="\\d+"/, 'height="' + getSize() + '"')
+      .replace(/fill="([^"]+)"/g, 'fill="' + color + '"')
+      .replace(/stroke="([^"]+)"/g, 'stroke="' + color + '"');
   };
 
   const svg20 = ${JSON.stringify(svg20)};
   const svg24 = ${JSON.stringify(svg24)};
 
-  return (
-    <div
-      style={{
-        display: 'inline-block',
-        width: getSize(),
-        height: getSize(),
-      }}
-      dangerouslySetInnerHTML={{
-        __html: updateSvg(size === '20' ? svg20 : svg24)
-      }}
-      {...props}
-    />
-  );
+  const svgContent = updateSvg(size === '20' ? svg20 : svg24);
+
+  return React.createElement('svg', {
+    xmlns: "http://www.w3.org/2000/svg",
+    dangerouslySetInnerHTML: { __html: svgContent },
+    width: getSize(),
+    height: getSize(),
+    ...props
+  });
 };
 
 export default ${name}Icon;
@@ -74,7 +60,7 @@ export const NataIcon = ({ name, ...props }) => {
       .join(",\n    ")}
   }[name.toLowerCase()];
   
-  return IconComponent ? <IconComponent {...props} /> : null;
+  return IconComponent ? React.createElement(IconComponent, props) : null;
 };
 `.trim()
 
