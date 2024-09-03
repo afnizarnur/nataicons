@@ -14,7 +14,8 @@
     "icons:sprite-all": "svg-sprite --svg-namespace-classnames false --symbol --symbol-dest . --symbol-sprite nataicons-sprite.svg './icons/./24x24/*.svg' './icons/./20x20/*.svg'",
     "icons:sprite-24x24": "svg-sprite --svg-namespace-classnames false --symbol --symbol-dest . --symbol-sprite nataicons-24x24-sprite.svg './icons/./24x24/*.svg'",
     "icons:sprite-20x20": "svg-sprite --svg-namespace-classnames false --symbol --symbol-dest . --symbol-sprite nataicons-20x20-sprite.svg './icons/./20x20/*.svg'",
-    "icons:optimize": "svgo icons/24x24 icons/20x20 --config .svgo.yaml --pretty --indent=2"
+    "icons:optimize": "svgo icons/24x24 icons/20x20 --config .svgo.yaml --pretty --indent=2",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
     "dedent": "^0.7.0",
     "figma-assets-generator": "^1.2.0",
     "fs": "0.0.1-security",
+    "release-it": "^17.6.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.29.0",
     "rollup-plugin-babel": "^4.4.0",
@@ -65,5 +67,11 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.25.6"
+  },
+  "release-it": {
+    "$schema": "https://unpkg.com/release-it/schema/release-it.json",
+    "github": {
+      "release": true
+    }
   }
 }
