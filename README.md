@@ -17,7 +17,7 @@
 
 ## Installation
 
-Install with [npm](npmjs.com/).
+Install with [npm](https://www.npmjs.com/package/nataicons).
 ```bash
 npm install nataicons --save
 ```
