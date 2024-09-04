@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "description": "A fun-themed simple open source icon made by the folks at Natatoko.",
   "author": "Afnizar Nur Ghifari <afnizarhilmi@gmail.com>",
-  "homepage": "https://github.com/afnizarnur/nataicons",
+  "homepage": "https://github.com/afnizarnur/nataicons#readme",
   "scripts": {
     "prepublishOnly": "npm run build",
     "build": "npm run build:icons && npm run build:vue && npm run build:react",

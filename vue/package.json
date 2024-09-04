@@ -1,7 +1,7 @@
 {
   "name": "@nataicons/vue",
-  "version": "1.0.0",
-  "description": "A fun-themed simple open source icon made by the folks at Natatoko.",
+  "version": "0.0.0",
+  "description": "A fun-themed simple open source icon made by the folks at Natatoko. This package provides Vue components for easy integration of icons.",
   "main": "index.js",
   "module": "index.esm.js",
   "files": [
@@ -34,7 +34,7 @@
   "bugs": {
     "url": "https://github.com/afnizarnur/nataicons/issues"
   },
-  "homepage": "https://github.com/afnizarnur/nataicons",
+  "homepage": "https://github.com/afnizarnur/nataicons#readme",
   "author": "Afnizar Nur Ghifari <afnizarhilmi@gmail.com>",
   "scripts": {
     "release": "release-it"
