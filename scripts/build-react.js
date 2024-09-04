@@ -4,7 +4,6 @@ const camelcase = require("camelcase")
 const { promisify } = require("util")
 const rimraf = promisify(require("rimraf"))
 const dedent = require("dedent")
-const pkg = require("../../package.json")
 
 const componentTemplate = (name, svg20, svg24) =>
   `
@@ -77,7 +76,7 @@ async function buildReactComponents() {
     await fs.mkdir("./react", { recursive: true })
 
     const icons24 = await fs.readdir(
-      path.join(__dirname, "..", "..", "icons", "24x24")
+      path.join(__dirname, "..", "icons", "24x24")
     )
     const components = []
 
@@ -85,8 +84,8 @@ async function buildReactComponents() {
       const baseName = path.basename(file, ".svg")
       const componentName = camelcase(baseName, { pascalCase: true })
 
-      const svg20Path = path.join(__dirname, "..", "..", "icons", "20x20", file)
-      const svg24Path = path.join(__dirname, "..", "..", "icons", "24x24", file)
+      const svg20Path = path.join(__dirname, "..", "icons", "20x20", file)
+      const svg24Path = path.join(__dirname, "..", "icons", "24x24", file)
 
       const [svg20Content, svg24Content] = await Promise.all([
         processSvgFile(svg20Path).catch(() => ""),

@@ -2,6 +2,7 @@ const fs = require("fs").promises
 const path = require("path")
 const camelcase = require("camelcase")
 
+// Component template remains unchanged
 const componentTemplate = (name, svg20, svg24) => `
 import { defineComponent, h, computed } from 'vue'
 
@@ -57,14 +58,24 @@ export default defineComponent({
 })
 `
 
-const indexTemplate = (components) => `
+// Move the index template to a separate function
+const generateIndexContent = (components) => {
+  const imports = components
+    .map((comp) => `import ${comp}Icon from './${comp}Icon.js'`)
+    .join("\n")
+
+  const exports = components.map((comp) => `${comp}Icon`).join(",\n  ")
+
+  const iconComponents = components
+    .map((comp) => `${comp.toLowerCase()}: ${comp}Icon`)
+    .join(",\n      ")
+
+  return `
 import { defineComponent, h } from 'vue'
-${components
-  .map((comp) => `import ${comp}Icon from './${comp}Icon.js'`)
-  .join("\n")}
+${imports}
 
 export {
-  ${components.map((comp) => `${comp}Icon`).join(",\n  ")}
+  ${exports}
 }
 
 export const NataIcon = defineComponent({
@@ -79,9 +90,7 @@ export const NataIcon = defineComponent({
   },
   setup(props) {
     const IconComponent = {
-      ${components
-        .map((comp) => `${comp.toLowerCase()}: ${comp}Icon`)
-        .join(",\n      ")}
+      ${iconComponents}
     }[props.name.toLowerCase()]
     
     return () => IconComponent 
@@ -90,29 +99,17 @@ export const NataIcon = defineComponent({
   }
 })
 `
+}
 
+// Existing helper functions
 const processSvgFile = async (filePath) => {
   const content = await fs.readFile(filePath, "utf8")
   return JSON.stringify(content.trim().replace(/\n/g, " "))
 }
 
 const buildIconComponent = async (name) => {
-  const svg20Path = path.join(
-    __dirname,
-    "..",
-    "..",
-    "icons",
-    "20x20",
-    `${name}.svg`
-  )
-  const svg24Path = path.join(
-    __dirname,
-    "..",
-    "..",
-    "icons",
-    "24x24",
-    `${name}.svg`
-  )
+  const svg20Path = path.join(__dirname, "..", "icons", "20x20", `${name}.svg`)
+  const svg24Path = path.join(__dirname, "..", "icons", "24x24", `${name}.svg`)
 
   const [svg20Content, svg24Content] = await Promise.all([
     processSvgFile(svg20Path).catch(() => '""'),
@@ -126,23 +123,22 @@ const buildIconComponent = async (name) => {
     svg24Content
   )
   await fs.writeFile(
-    path.join(__dirname, "..", "..", "vue", `${componentName}Icon.js`),
+    path.join(__dirname, "..", "vue", `${componentName}Icon.js`),
     componentContent
   )
   return componentName
 }
 
+// Main build function
 const buildVueComponents = async () => {
-  const icons24 = await fs.readdir(
-    path.join(__dirname, "..", "..", "icons", "24x24")
-  )
+  const icons24 = await fs.readdir(path.join(__dirname, "..", "icons", "24x24"))
   const componentNames = await Promise.all(
     icons24.map((file) => buildIconComponent(file.replace(".svg", "")))
   )
 
-  const indexContent = indexTemplate(componentNames)
+  const indexContent = generateIndexContent(componentNames)
   await fs.writeFile(
-    path.join(__dirname, "..", "..", "vue", "index.js"),
+    path.join(__dirname, "..", "vue", "index.js"),
     indexContent
   )
 
