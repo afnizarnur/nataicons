@@ -1,7 +1,7 @@
 {
   "name": "@nataicons/vue",
   "version": "1.0.0",
-  "description": "Vue components for Nata Icons",
+  "description": "A fun-themed simple open source icon made by the folks at Natatoko.",
   "main": "index.js",
   "module": "index.esm.js",
   "files": [
