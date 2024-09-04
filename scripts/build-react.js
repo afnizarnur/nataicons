@@ -72,8 +72,9 @@ async function buildReactComponents() {
   console.log("Building React icon components...")
 
   try {
-    await rimraf("./react/*")
-    await fs.mkdir("./react", { recursive: true })
+    const reactPackagePath = path.join(__dirname, "..", "react")
+    await rimraf(path.join(reactPackagePath, "*"))
+    await fs.mkdir(reactPackagePath, { recursive: true })
 
     const icons24 = await fs.readdir(
       path.join(__dirname, "..", "icons", "24x24")
@@ -97,12 +98,43 @@ async function buildReactComponents() {
         svg20Content,
         svg24Content
       )
-      await fs.writeFile(`./react/${componentName}Icon.js`, dedent(component))
+      await fs.writeFile(
+        path.join(reactPackagePath, `${componentName}Icon.js`),
+        dedent(component)
+      )
       components.push(componentName)
     }
 
     const indexContent = indexTemplate(components)
-    await fs.writeFile("./react/index.js", dedent(indexContent))
+    await fs.writeFile(
+      path.join(reactPackagePath, "index.js"),
+      dedent(indexContent)
+    )
+
+    // Create package.json for React package
+    const packageJson = {
+      name: "@nataicons/react",
+      version: "1.0.0",
+      description: "React components for Nata Icons",
+      main: "index.js",
+      files: ["*.js", "!*.test.js", "!*.spec.js"],
+      peerDependencies: {
+        react: "^16.8.0 || ^17.0.0 || ^18.0.0",
+      },
+      repository: {
+        type: "git",
+        url: "https://github.com/yourusername/nataicons.git",
+        directory: "react",
+      },
+      publishConfig: {
+        access: "public",
+      },
+    }
+
+    await fs.writeFile(
+      path.join(reactPackagePath, "package.json"),
+      JSON.stringify(packageJson, null, 2)
+    )
 
     console.log("Finished building React components.\n")
   } catch (error) {

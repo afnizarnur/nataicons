@@ -7,11 +7,11 @@ export default {
   input: "react/index.js",
   output: [
     {
-      file: "react/lib/index.cjs.js",
+      file: "react/index.cjs.js",
       format: "cjs",
     },
     {
-      file: "react/lib/index.es.js",
+      file: "react/index.es.js",
       format: "es",
     },
   ],

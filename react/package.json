@@ -1,0 +1,22 @@
+{
+  "name": "@nataicons/react",
+  "version": "1.0.0",
+  "description": "React components for Nata Icons",
+  "main": "index.js",
+  "files": [
+    "*.js",
+    "!*.test.js",
+    "!*.spec.js"
+  ],
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/nataicons.git",
+    "directory": "react"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

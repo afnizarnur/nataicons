@@ -8,11 +8,11 @@ export default {
   input: "vue/index.js",
   output: [
     {
-      file: "vue/lib/index.cjs.js",
+      file: "vue/index.cjs.js",
       format: "cjs",
     },
     {
-      file: "vue/lib/index.es.js",
+      file: "vue/index.es.js",
       format: "es",
     },
   ],
