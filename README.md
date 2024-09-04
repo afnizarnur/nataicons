@@ -6,7 +6,7 @@
 <h3 align="center">Nataicons</h3>
 
 <p align="center">
-  A fun-themed simple open source icon by the folks at <a href="https://natatoko.com">Natatoko</a>. This icons provide 2 icons variant: 24x24 and 20x20. Practically, this icons are used on our web application, but feel free to use it on your project!
+  A fun-themed simple open source icon by the folks at <a href="https://natatoko.com">Natatoko</a>.
 </p>
 
 ---
@@ -17,9 +17,9 @@
 
 ## Installation
 
-Install with [npm](https://www.npmjs.com/package/nataicons).
+Install with npm
 ```bash
-npm install nataicons --save
+npm install nataicons
 ```
 
 ## Usage
@@ -46,13 +46,18 @@ Include an icon on your page with the following markup:
 
 ### Vue
 
-1. Import the icon components
+1. Install with npm
+```bash
+npm install @nataicons/vue
+```
+
+2. Import the icon components
 
 ```js
 import { AlarmIcon, AlertIcon, NataIcon } from "nataicons/vue"
 ```
 
-2. Use the icon components in your template
+3. Use the icon components in your template
 
 
 ```jsx
@@ -74,13 +79,18 @@ You can set a custom `size` (in pixels) or use the default sizes (24px or 20px).
 
 ### React
 
-1. Import the icon components
-
-```jsx
-import { AlarmIcon, NataIcon } from "nataicons/react"
+1. Install with npm
+```bash
+npm install @nataicons/react
 ```
 
-2. Use the icon components in your JSX
+2. Import the icon components
+
+```jsx
+import { AlarmIcon, NataIcon } from "@nataicons/react"
+```
+
+3. Use the icon components in your JSX
 
 ```jsx
 function MyComponent() {
