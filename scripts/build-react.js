@@ -73,17 +73,23 @@ async function buildReactComponents() {
 
   try {
     const reactPackagePath = path.join(__dirname, "..", "react")
-    await rimraf(path.join(reactPackagePath, "*"))
+
+    // Create the react directory if it doesn't exist
     await fs.mkdir(reactPackagePath, { recursive: true })
 
+    // Read existing files
+    const existingFiles = await fs.readdir(reactPackagePath)
+
+    // Generate new components
     const icons24 = await fs.readdir(
       path.join(__dirname, "..", "icons", "24x24")
     )
     const components = []
 
     for (const file of icons24) {
-      const baseName = path.basename(file, ".svg")
-      const componentName = camelcase(baseName, { pascalCase: true })
+      const name = file.replace(".svg", "")
+      const componentName = camelcase(name, { pascalCase: true })
+      const componentFileName = `${componentName}Icon.js`
 
       const svg20Path = path.join(__dirname, "..", "icons", "20x20", file)
       const svg24Path = path.join(__dirname, "..", "icons", "24x24", file)
@@ -99,58 +105,30 @@ async function buildReactComponents() {
         svg24Content
       )
       await fs.writeFile(
-        path.join(reactPackagePath, `${componentName}Icon.js`),
+        path.join(reactPackagePath, componentFileName),
         dedent(component)
       )
       components.push(componentName)
+
+      // Remove the file from existingFiles list if it was there
+      const index = existingFiles.indexOf(componentFileName)
+      if (index > -1) {
+        existingFiles.splice(index, 1)
+      }
     }
 
+    // Remove old component files that are no longer needed
+    for (const file of existingFiles) {
+      if (file.endsWith("Icon.js")) {
+        await fs.unlink(path.join(reactPackagePath, file))
+      }
+    }
+
+    // Generate and write index.js
     const indexContent = indexTemplate(components)
     await fs.writeFile(
       path.join(reactPackagePath, "index.js"),
       dedent(indexContent)
-    )
-
-    // Create package.json for React package
-    const packageJson = {
-      name: "@nataicons/react",
-      version: "1.0.0",
-      description: "React components for Nata Icons",
-      main: "index.js",
-      module: "index.esm.js",
-      types: "index.d.ts",
-      sideEffects: false,
-      files: [
-        "*.js",
-        "*.d.ts",
-        "!*.test.js",
-        "!*.spec.js",
-        "LICENSE",
-        "README.md",
-      ],
-      peerDependencies: {
-        react: "^16.8.0 || ^17.0.0 || ^18.0.0",
-      },
-      repository: {
-        type: "git",
-        url: "https://github.com/yourusername/nataicons.git",
-        directory: "react",
-      },
-      publishConfig: {
-        access: "public",
-      },
-      keywords: ["react", "icons", "svg", "inline", "nata", "nataicons"],
-      license: "MIT",
-    }
-
-    await fs.writeFile(
-      path.join(reactPackagePath, "package.json"),
-      JSON.stringify(packageJson, null, 2)
-    )
-
-    await fs.copyFile(
-      path.join(__dirname, "..", "LICENSE"),
-      path.join(reactPackagePath, "LICENSE")
     )
 
     console.log("Finished building React components.\n")

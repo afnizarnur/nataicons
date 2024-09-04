@@ -137,8 +137,12 @@ const buildVueComponents = async () => {
 
   try {
     const vuePackagePath = path.join(__dirname, "..", "vue")
-    await rimraf(path.join(vuePackagePath, "*"))
+
+    // Create the vue directory if it doesn't exist
     await fs.mkdir(vuePackagePath, { recursive: true })
+
+    // Read existing files
+    const existingFiles = await fs.readdir(vuePackagePath)
 
     const icons24 = await fs.readdir(
       path.join(__dirname, "..", "icons", "24x24")
@@ -149,42 +153,25 @@ const buildVueComponents = async () => {
       const name = file.replace(".svg", "")
       const componentName = await buildIconComponent(name, vuePackagePath)
       componentNames.push(componentName)
+
+      // Remove the file from existingFiles list if it was there
+      const componentFileName = `${componentName}Icon.js`
+      const index = existingFiles.indexOf(componentFileName)
+      if (index > -1) {
+        existingFiles.splice(index, 1)
+      }
     }
 
+    // Remove old component files that are no longer needed
+    for (const file of existingFiles) {
+      if (file.endsWith("Icon.js")) {
+        await fs.unlink(path.join(vuePackagePath, file))
+      }
+    }
+
+    // Generate and write index.js
     const indexContent = generateIndexContent(componentNames)
     await fs.writeFile(path.join(vuePackagePath, "index.js"), indexContent)
-
-    const packageJson = {
-      name: "@nataicons/vue",
-      version: "1.0.0",
-      description: "Vue components for Nata Icons",
-      main: "index.js",
-      module: "index.esm.js",
-      files: ["*.js", "!*.test.js", "!*.spec.js", "LICENSE", "README.md"],
-      peerDependencies: {
-        vue: "^3.0.0",
-      },
-      repository: {
-        type: "git",
-        url: "https://github.com/yourusername/nataicons.git",
-        directory: "vue",
-      },
-      publishConfig: {
-        access: "public",
-      },
-      keywords: ["vue", "icons", "svg", "inline", "nata", "nataicons"],
-      license: "MIT",
-    }
-
-    await fs.writeFile(
-      path.join(vuePackagePath, "package.json"),
-      JSON.stringify(packageJson, null, 2)
-    )
-
-    await fs.copyFile(
-      path.join(__dirname, "..", "LICENSE"),
-      path.join(vuePackagePath, "LICENSE")
-    )
 
     console.log("Vue components built successfully")
   } catch (error) {
