@@ -1,6 +1,8 @@
 const fs = require("fs").promises
 const path = require("path")
 const camelcase = require("camelcase")
+const { promisify } = require("util")
+const rimraf = promisify(require("rimraf"))
 
 // Component template remains unchanged
 const componentTemplate = (name, svg20, svg24) => `
@@ -107,7 +109,7 @@ const processSvgFile = async (filePath) => {
   return JSON.stringify(content.trim().replace(/\n/g, " "))
 }
 
-const buildIconComponent = async (name) => {
+const buildIconComponent = async (name, outputPath) => {
   const svg20Path = path.join(__dirname, "..", "icons", "20x20", `${name}.svg`)
   const svg24Path = path.join(__dirname, "..", "icons", "24x24", `${name}.svg`)
 
@@ -123,7 +125,7 @@ const buildIconComponent = async (name) => {
     svg24Content
   )
   await fs.writeFile(
-    path.join(__dirname, "..", "vue", `${componentName}Icon.js`),
+    path.join(outputPath, `${componentName}Icon.js`),
     componentContent
   )
   return componentName
@@ -131,18 +133,63 @@ const buildIconComponent = async (name) => {
 
 // Main build function
 const buildVueComponents = async () => {
-  const icons24 = await fs.readdir(path.join(__dirname, "..", "icons", "24x24"))
-  const componentNames = await Promise.all(
-    icons24.map((file) => buildIconComponent(file.replace(".svg", "")))
-  )
+  console.log("Building Vue icon components...")
 
-  const indexContent = generateIndexContent(componentNames)
-  await fs.writeFile(
-    path.join(__dirname, "..", "vue", "index.js"),
-    indexContent
-  )
+  try {
+    const vuePackagePath = path.join(__dirname, "..", "vue")
+    await rimraf(path.join(vuePackagePath, "*"))
+    await fs.mkdir(vuePackagePath, { recursive: true })
 
-  console.log("Vue components built successfully")
+    const icons24 = await fs.readdir(
+      path.join(__dirname, "..", "icons", "24x24")
+    )
+    const componentNames = []
+
+    for (const file of icons24) {
+      const name = file.replace(".svg", "")
+      const componentName = await buildIconComponent(name, vuePackagePath)
+      componentNames.push(componentName)
+    }
+
+    const indexContent = generateIndexContent(componentNames)
+    await fs.writeFile(path.join(vuePackagePath, "index.js"), indexContent)
+
+    const packageJson = {
+      name: "@nataicons/vue",
+      version: "1.0.0",
+      description: "Vue components for Nata Icons",
+      main: "index.js",
+      module: "index.esm.js",
+      files: ["*.js", "!*.test.js", "!*.spec.js", "LICENSE", "README.md"],
+      peerDependencies: {
+        vue: "^3.0.0",
+      },
+      repository: {
+        type: "git",
+        url: "https://github.com/yourusername/nataicons.git",
+        directory: "vue",
+      },
+      publishConfig: {
+        access: "public",
+      },
+      keywords: ["vue", "icons", "svg", "inline", "nata", "nataicons"],
+      license: "MIT",
+    }
+
+    await fs.writeFile(
+      path.join(vuePackagePath, "package.json"),
+      JSON.stringify(packageJson, null, 2)
+    )
+
+    await fs.copyFile(
+      path.join(__dirname, "..", "LICENSE"),
+      path.join(vuePackagePath, "LICENSE")
+    )
+
+    console.log("Vue components built successfully")
+  } catch (error) {
+    console.error("Error building Vue components:", error)
+  }
 }
 
 buildVueComponents().catch(console.error)

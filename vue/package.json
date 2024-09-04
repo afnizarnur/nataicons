@@ -1,32 +1,29 @@
 {
-  "name": "@nataicons/react",
+  "name": "@nataicons/vue",
   "version": "1.0.0",
-  "description": "React components for Nata Icons",
+  "description": "Vue components for Nata Icons",
   "main": "index.js",
   "module": "index.esm.js",
-  "types": "index.d.ts",
-  "sideEffects": false,
   "files": [
     "*.js",
-    "*.d.ts",
     "!*.test.js",
     "!*.spec.js",
     "LICENSE",
     "README.md"
   ],
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "vue": "^3.0.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/yourusername/nataicons.git",
-    "directory": "react"
+    "directory": "vue"
   },
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
-    "react",
+    "vue",
     "icons",
     "svg",
     "inline",

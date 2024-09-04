@@ -117,7 +117,17 @@ async function buildReactComponents() {
       version: "1.0.0",
       description: "React components for Nata Icons",
       main: "index.js",
-      files: ["*.js", "!*.test.js", "!*.spec.js"],
+      module: "index.esm.js",
+      types: "index.d.ts",
+      sideEffects: false,
+      files: [
+        "*.js",
+        "*.d.ts",
+        "!*.test.js",
+        "!*.spec.js",
+        "LICENSE",
+        "README.md",
+      ],
       peerDependencies: {
         react: "^16.8.0 || ^17.0.0 || ^18.0.0",
       },
@@ -129,11 +139,18 @@ async function buildReactComponents() {
       publishConfig: {
         access: "public",
       },
+      keywords: ["react", "icons", "svg", "inline", "nata", "nataicons"],
+      license: "MIT",
     }
 
     await fs.writeFile(
       path.join(reactPackagePath, "package.json"),
       JSON.stringify(packageJson, null, 2)
+    )
+
+    await fs.copyFile(
+      path.join(__dirname, "..", "LICENSE"),
+      path.join(reactPackagePath, "LICENSE")
     )
 
     console.log("Finished building React components.\n")
