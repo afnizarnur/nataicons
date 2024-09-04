@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/nataicons.git",
+    "url": "https://github.com/afnizarnur/nataicons.git",
     "directory": "react"
   },
   "publishConfig": {
@@ -38,5 +38,8 @@
     "url": "https://github.com/afnizarnur/nataicons/issues"
   },
   "homepage": "https://github.com/afnizarnur/nataicons",
-  "author": "Afnizar Nur Ghifari <afnizarhilmi@gmail.com>"
+  "author": "Afnizar Nur Ghifari <afnizarhilmi@gmail.com>",
+  "scripts": {
+    "release": "release-it"
+  }
 }
