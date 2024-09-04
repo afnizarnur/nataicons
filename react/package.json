@@ -1,0 +1,37 @@
+{
+  "name": "@nataicons/react",
+  "version": "1.0.0",
+  "description": "A fun-themed simple open source icon made by the folks at Natatoko.",
+  "main": "index.js",
+  "module": "index.esm.js",
+  "types": "index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "!*.test.js",
+    "!*.spec.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/nataicons.git",
+    "directory": "react"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "react",
+    "icons",
+    "svg",
+    "inline",
+    "nata",
+    "nataicons"
+  ],
+  "license": "MIT"
+}
