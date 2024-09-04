@@ -33,5 +33,10 @@
     "nata",
     "nataicons"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/afnizarnur/nataicons/issues"
+  },
+  "homepage": "https://github.com/afnizarnur/nataicons",
+  "author": "Afnizar Nur Ghifari <afnizarhilmi@gmail.com>"
 }
