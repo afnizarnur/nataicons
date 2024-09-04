@@ -1,6 +1,6 @@
 {
   "name": "@nataicons/react",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A fun-themed simple open source icon made by the folks at Natatoko. This package provides React components for easy integration of icons.",
   "main": "index.js",
   "module": "index.esm.js",
